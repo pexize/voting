@@ -1,0 +1,16 @@
+{
+    "categorias": {
+        "Mais nerd!": [
+            "André Junqueira",
+            "Pexis",
+            "Fino"
+        ]
+    },
+    "votos": {
+        "Mais nerd!": {
+            "André Junqueira": 0,
+            "Pexis": 1,
+            "Fino": 0
+        }
+    }
+}

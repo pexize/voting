@@ -1,0 +1,123 @@
+/* Importa a fonte do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* --- Variáveis do Design "Modern & Polished" --- */
+:root {
+    --gradient-start: #0052D4;
+    --gradient-end: #4364F7;
+    --gradient-secondary: #6FB1FC;
+    --background-gradient: linear-gradient(45deg, var(--gradient-start), var(--gradient-end), var(--gradient-secondary));
+    --card-bg: rgba(255, 255, 255, 0.95); /* Mais opaco */
+    --text-color: #333;
+    --heading-color: #111827;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 82, 212, 0.15); /* Sombra baseada no azul */
+    --shadow-card: 0 10px 25px var(--shadow-color);
+    --shadow-hover: 0 20px 35px var(--shadow-color);
+    --border-radius: 18px;
+}
+
+/* --- Estilos Globais --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: var(--background-gradient);
+    color: var(--text-color);
+    background-attachment: fixed;
+}
+
+/* --- Tipografia e Cabeçalho --- */
+.display-4 {
+    font-weight: 800;
+    font-size: 3.5rem;
+    color: var(--heading-color); /* Cor sólida */
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05));
+}
+.lead {
+    font-weight: 500;
+    color: #555;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+/* --- Cards e Layout --- */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+/* --- Formulários e Botões --- */
+.form-control, .form-select {
+    border-radius: 12px;
+    padding: 0.875rem 1.125rem;
+    border: 1px solid #d1d1d1;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--gradient-start);
+    box-shadow: 0 0 0 4px rgba(0, 82, 212, 0.1);
+}
+.btn {
+    border-radius: 12px;
+    padding: 0.875rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+}
+.btn-primary {
+    background-image: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3);
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 82, 212, 0.4);
+}
+
+/* --- Efeito "Glow" Sutil (agora um pulso de sombra) --- */
+@keyframes pulse {
+    0% { box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3); }
+    50% { box-shadow: 0 4px 25px rgba(67, 100, 247, 0.4); }
+    100% { box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3); }
+}
+.btn-glow {
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
+/* --- Listas e Mural --- */
+.messages-list .border-bottom:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+.ranking-list .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border: none;
+}
+.ranking-list .badge {
+    background-image: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    font-size: 0.9em;
+}
+
+/* Animações de Entrada */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 0.7s ease-out forwards;
+}
