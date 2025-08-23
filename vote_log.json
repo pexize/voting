@@ -1,0 +1,173 @@
+[
+    {
+        "event_id": "evt_1724338800",
+        "event_name": "Votação Principal",
+        "category": "Exemplo de Categoria",
+        "person": "Exemplo de Pessoa",
+        "ip_address": "127.0.0.1",
+        "timestamp": "2025-08-22T10:00:00Z",
+        "user_agent": "Exemplo de Navegador"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "O Mais Engraçado(a)",
+        "person": "Pessoa C",
+        "ip_address": "191.191.61.116",
+        "timestamp": "2025-08-22T18:28:31+00:00",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/139.0.0.0 Safari\/537.36"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Mais Inovador(a)",
+        "person": "Pessoa A",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:38+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Melhor Companheiro(a) de Equipe",
+        "person": "Pessoa B",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:38+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Mestre do Café",
+        "person": "Pessoa C",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:40+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Solucionador(a) de Problemas",
+        "person": "Pessoa D",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:44+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "O Mais Engraçado(a)",
+        "person": "Pessoa E",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:46+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Melhor Playlist",
+        "person": "Pessoa A",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:49+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Rei\/Rainha do Home Office",
+        "person": "Pessoa B",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:52+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "O Mais Organizado(a)",
+        "person": "Pessoa A",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:54+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Melhor Apresentador(a)",
+        "person": "Pessoa C",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:29:57+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "O Mais prestativo",
+        "person": "Pessoa D",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:30:01+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Mestre da Planilha",
+        "person": "Pessoa D",
+        "ip_address": "104.28.63.189",
+        "timestamp": "2025-08-22T18:30:04+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Mais Inovador(a)",
+        "person": "Pessoa D",
+        "ip_address": "191.191.61.116",
+        "timestamp": "2025-08-22T18:44:47+00:00",
+        "user_agent": "Mozilla\/5.0 (Linux; Android 10; K) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/139.0.0.0 Mobile Safari\/537.36"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Solucionador(a) de Problemas",
+        "person": "Pessoa A",
+        "ip_address": "191.191.61.116",
+        "timestamp": "2025-08-22T20:07:49+00:00",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/139.0.0.0 Safari\/537.36"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Melhor Playlist",
+        "person": "Pessoa C",
+        "ip_address": "191.191.61.116",
+        "timestamp": "2025-08-22T20:07:52+00:00",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/139.0.0.0 Safari\/537.36"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Mais Inovador(a)",
+        "person": "Pessoa C",
+        "ip_address": "188.80.87.87",
+        "timestamp": "2025-08-22T20:14:56+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 26_0_0 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) CriOS\/139.0.7258.76 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Melhor Apresentador(a)",
+        "person": "Pessoa B",
+        "ip_address": "188.80.87.87",
+        "timestamp": "2025-08-22T20:15:06+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 26_0_0 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) CriOS\/139.0.7258.76 Mobile\/15E148 Safari\/604.1"
+    },
+    {
+        "event_id": "evt_large_sample_1724340000",
+        "event_name": "Grande Votação Anual",
+        "category": "Espírito Positivo",
+        "person": "Pessoa D",
+        "ip_address": "216.238.113.16",
+        "timestamp": "2025-08-22T20:17:06+00:00",
+        "user_agent": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/18.6 Mobile\/15E148 Safari\/604.1"
+    }
+]

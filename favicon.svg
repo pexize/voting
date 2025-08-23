@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <style>
+      .bg { fill: #FF5A5F; }
+      .icon { fill: #FFFFFF; }
+    </style>
+  </defs>
+  <circle class="bg" cx="128" cy="128" r="128"/>
+  <path class="icon" d="M128 176a48.05 48.05 0 0 0 48-48V80a48 48 0 0 0-96 0v48a48.05 48.05 0 0 0 48 48Zm-32-96a32 32 0 0 1 64 0v48a32 32 0 0 1-64 0Z"/>
+  <path class="icon" d="M208 128a8 8 0 0 0-8 8v1.4a72.08 72.08 0 0 1-72 70.6 72.08 72.08 0 0 1-72-70.6V136a8 8 0 0 0-16 0v1.4C48 176.43 80.43 208 120 208h16c39.57 0 72-31.57 72-70.6V136a8 8 0 0 0-8-8Z"/>
+</svg>

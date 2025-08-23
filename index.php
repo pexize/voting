@@ -1,4 +1,12 @@
 <?php
+/**
+ * index.php
+ *
+ * Página principal do sistema de votação. Exibe as categorias,
+ * rankings em tempo real e o mural de recados.
+ * 
+ * Versão com layout de "cards" individuais por categoria.
+ */
 require_once 'data_handler.php';
 
 $data = readData();
@@ -8,15 +16,7 @@ $activeEventId = $data['active_event_id'];
 $activeEventName = $activeEvent['name'] ?? 'Nenhuma votação ativa';
 $messages = $data['messages'] ?? [];
 
-// Lógica para adicionar novo recado
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_message'])) {
-    if (addMessage($data, $_POST['name'], $_POST['message'])) {
-        header("Location: index.php?message_sent=true");
-        exit;
-    }
-}
-
-// Identifica as categorias já votadas
+// Identifica as categorias em que o usuário já votou buscando por cookies
 $voted_categories = [];
 foreach (array_keys($categories) as $category) {
     $cookie_name = 'voted_' . $activeEventId . '_' . preg_replace('/[^a-zA-Z0-9_]/', '', $category);
@@ -31,123 +31,113 @@ foreach (array_keys($categories) as $category) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Central de Pesquisa MR</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <!-- Bootstrap e Ícones -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container my-5">
         <header class="text-center mb-5">
-            <h1 class="display-4 fw-bold">Central de Pesquisa MR</h1>
+            <h1 class="display-4 fw-bold d-flex align-items-center justify-content-center">
+                <i class="bi bi-mic-fill me-3"></i>Central de Pesquisa MR
+            </h1>
             <p class="lead text-muted"><?= htmlspecialchars($activeEventName) ?></p>
         </header>
 
         <div id="feedback-message" class="mb-4" style="display:none;"></div>
-        <?php if(isset($_GET['message_sent'])): ?>
-            <div class="alert alert-success">Seu recado foi enviado com sucesso!</div>
-        <?php endif; ?>
 
-        <div class="row g-5">
-            <!-- Coluna da Votação e Rankings -->
-            <div class="col-lg-6 animate-fade-in-up">
-                <div class="card shadow-sm mb-4 transition-transform duration-300 hover:scale-105">
-                    <div class="card-header">
-                        <h2 class="h5 mb-0"><i class="bi bi-check2-square"></i> Vote Agora!</h2>
-                    </div>
-                    <div class="card-body">
-                        <?php if (empty($categories)): ?>
-                            <p class="text-muted">Nenhuma categoria de votação disponível.</p>
-                        <?php else: ?>
-                            <form id="vote-form">
-                                <div class="mb-3">
-                                    <label for="category_select" class="form-label">Categoria:</label>
-                                    <select name="category" id="category_select" class="form-select" required>
-                                        <?php
-                                        $available_categories = 0;
-                                        foreach (array_keys($categories) as $category) {
-                                            if (!in_array($category, $voted_categories)) {
-                                                echo '<option value="' . htmlspecialchars($category) . '">' . htmlspecialchars($category) . '</option>';
-                                                $available_categories++;
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="person_select" class="form-label">Pessoa:</label>
-                                    <select name="person" id="person_select" class="form-select" required></select>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" name="vote" class="btn btn-primary btn-glow">Votar</button>
-                                </div>
-                            </form>
-                            <p id="already-voted-message" class="alert alert-info mt-3" style="display:<?= $available_categories > 0 ? 'none' : 'block' ?>;">
-                                Você já votou em todas as categorias disponíveis.
-                            </p>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                
-                <div class="card shadow-sm transition-transform duration-300 hover:scale-105">
-                    <div class="card-header">
-                        <h2 class="h5 mb-0"><i class="bi bi-bar-chart-line-fill"></i> Rankings</h2>
-                    </div>
-                    <div class="card-body">
-                        <?php if (!empty($categories)): ?>
-                            <?php foreach ($categories as $category => $people): ?>
-                                <div class="category-ranking mb-4" id="category-<?= htmlspecialchars(preg_replace('/[^a-zA-Z0-9_]/', '', $category)) ?>">
-                                    <h3 class="h6"><?= htmlspecialchars($category) ?></h3>
-                                    <div class="chart-container mb-2" style="position: relative; height: 150px;">
-                                        <canvas id="chart-<?= htmlspecialchars(preg_replace('/[^a-zA-Z0-9_]/', '', $category)) ?>"></canvas>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Seção de Votação por Categoria -->
+                <div class="row g-4">
+                    <?php if (empty($categories)): ?>
+                        <div class="col-12">
+                            <p class="text-muted text-center">Nenhuma categoria de votação disponível no momento.</p>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($categories as $category => $people): ?>
+                            <?php 
+                                $hasVoted = in_array($category, $voted_categories);
+                                $sanitizedId = htmlspecialchars(preg_replace('/[^a-zA-Z0-9_]/', '', $category));
+                            ?>
+                            <div class="col-md-6 animate-fade-in-up">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <h3 class="h5 mb-0"><?= htmlspecialchars($category) ?></h3>
                                     </div>
-                                    <ul class="ranking-list list-group list-group-flush"></ul>
+                                    <div class="card-body d-flex flex-column justify-content-center">
+                                        <!-- Visualização de Votação -->
+                                        <div class="vote-view" id="vote-view-<?= $sanitizedId ?>" style="<?= $hasVoted ? 'display: none;' : '' ?>">
+                                            <form class="category-vote-form">
+                                                <input type="hidden" name="action" value="vote">
+                                                <input type="hidden" name="category" value="<?= htmlspecialchars($category) ?>">
+                                                <div class="mb-3">
+                                                    <label for="person-select-<?= $sanitizedId ?>" class="form-label">Vote em:</label>
+                                                    <select name="person" id="person-select-<?= $sanitizedId ?>" class="form-select" required>
+                                                        <option value="" disabled selected>Selecione uma opção</option>
+                                                        <?php foreach (array_keys($people) as $person): ?>
+                                                            <option value="<?= htmlspecialchars($person) ?>"><?= htmlspecialchars($person) ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary">Votar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- Visualização de Ranking -->
+                                        <div class="ranking-view" id="ranking-view-<?= $sanitizedId ?>" style="<?= !$hasVoted ? 'display: none;' : '' ?>">
+                                            <div class="chart-container" style="position: relative; height: <?= max(150, count($people) * 35) ?>px;">
+                                                <canvas id="chart-<?= $sanitizedId ?>"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-            </div>
 
-            <!-- Coluna do Mural de Recados -->
-            <div class="col-lg-6 animate-fade-in-up" style="animation-delay: 150ms;">
-                <div class="card shadow-sm transition-transform duration-300 hover:scale-105 h-100">
-                    <div class="card-header">
-                        <h2 class="h5 mb-0"><i class="bi bi-chat-left-text"></i> Mural de Recados</h2>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <form method="POST" action="index.php" class="mb-4">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Seu Nome</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                <!-- Seção do Mural de Recados (separada e alinhada) -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h2 class="h5 mb-0"><i class="bi bi-chat-left-text"></i> Mural de Recados</h2>
                             </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Seu Recado</label>
-                                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" name="add_message" class="btn btn-secondary">Enviar Recado</button>
-                        </form>
-                        <hr>
-                        <div class="messages-list flex-grow-1" style="max-height: 450px; overflow-y: auto;">
-                            <?php if (empty($messages)): ?>
-                                <p class="text-muted">Nenhum recado ainda.</p>
-                            <?php else: ?>
-                                <?php foreach ($messages as $msg): ?>
-                                    <div class="border-bottom pb-2 mb-2 transition-transform duration-200 hover:bg-gray-100 p-2 rounded">
-                                        <p class="mb-1"><?= htmlspecialchars($msg['message']) ?></p>
-                                        <small class="text-muted">
-                                            <strong><?= htmlspecialchars($msg['name']) ?></strong> - <?= $msg['date'] ?>
-                                        </small>
+                            <div class="card-body">
+                                <form id="message-form" class="mb-4">
+                                    <input type="hidden" name="action" value="add_message">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Seu Nome</label>
+                                        <input type="text" class="form-control" id="name" name="name" required maxlength="<?= MAX_USERNAME_LENGTH ?>">
                                     </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Seu Recado</label>
+                                        <textarea class="form-control" id="message" name="message" rows="3" required maxlength="<?= MAX_MESSAGE_LENGTH ?>"></textarea>
+                                        <small id="char-counter" class="form-text text-muted">280 caracteres restantes</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary">Enviar Recado</button>
+                                </form>
+                                <hr>
+                                <div id="messages-list" class="flex-grow-1" style="max-height: 450px; overflow-y: auto;">
+                                    <?php if (empty($messages)): ?>
+                                        <p id="no-messages" class="text-muted text-center mt-3">Nenhum recado ainda. Seja o primeiro!</p>
+                                    <?php else: ?>
+                                        <?php foreach ($messages as $msg): ?>
+                                            <div class="border-bottom pb-2 mb-2">
+                                                <p class="mb-1" style="word-wrap: break-word;"><i class="bi bi-chat-right-text me-2 text-muted"></i><?= htmlspecialchars($msg['message']) ?></p>
+                                                <small class="text-muted ms-4">
+                                                    <strong><i class="bi bi-person-fill"></i> <?= htmlspecialchars($msg['name']) ?></strong> - <i class="bi bi-clock"></i> <?= $msg['date'] ?>
+                                                </small>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,21 +145,115 @@ foreach (array_keys($categories) as $category) {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Variáveis e Constantes ---
             const categoriesData = <?php echo json_encode($categories); ?>;
+            const votedCategories = <?php echo json_encode($voted_categories); ?>;
             const chartInstances = {};
 
-            const categorySelect = document.getElementById('category_select');
-            const personSelect = document.getElementById('person_select');
-            const voteForm = document.getElementById('vote-form');
-            const feedbackMessage = document.getElementById('feedback-message');
-            const alreadyVotedMessage = document.getElementById('already-voted-message');
+            /**
+             * Sanitiza um nome de categoria para ser usado como ID de elemento.
+             */
+            function sanitizeCategory(categoryName) {
+                return categoryName.replace(/[^a-zA-Z0-9_]/g, '');
+            }
 
+            // --- Lógica de Votação ---
+            const voteForms = document.querySelectorAll('.category-vote-form');
+            voteForms.forEach(form => {
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const voteButton = form.querySelector('button[type="submit"]');
+
+                    if (!formData.get('person')) {
+                        showFeedback('Por favor, selecione uma opção para votar.', false);
+                        return;
+                    }
+
+                    voteButton.disabled = true;
+                    voteButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Votando...';
+
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                showFeedback(result.message, true);
+                                const votedCategory = formData.get('category');
+                                
+                                // Atualiza os dados e renderiza o gráfico
+                                for (const category in result.categories) {
+                                    categoriesData[category] = result.categories[category];
+                                }
+                                renderOrUpdateChart(votedCategory, categoriesData[votedCategory]);
+
+                                // Troca a visualização de voto pela de ranking
+                                const sanitizedId = sanitizeCategory(votedCategory);
+                                const voteView = document.getElementById(`vote-view-${sanitizedId}`);
+                                const rankingView = document.getElementById(`ranking-view-${sanitizedId}`);
+
+                                if (voteView && rankingView) {
+                                    voteView.style.display = 'none';
+                                    rankingView.style.display = 'block';
+                                    rankingView.classList.add('ranking-visible');
+                                    rankingView.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            } else {
+                                showFeedback(result.message, false);
+                            }
+                        })
+                        .catch(() => showFeedback('Erro de comunicação com o servidor.', false))
+                        .finally(() => {
+                            voteButton.disabled = false;
+                            voteButton.innerHTML = 'Votar';
+                        });
+                });
+            });
+
+            // --- Lógica do Mural de Recados ---
+            const messageForm = document.getElementById('message-form');
+            if (messageForm) {
+                // (código do mural de recados permanece o mesmo)
+                const messageInput = document.getElementById('message');
+                const charCounter = document.getElementById('char-counter');
+                const MAX_MESSAGE_LENGTH = <?= MAX_MESSAGE_LENGTH ?>;
+
+                messageInput.addEventListener('input', () => {
+                    const remaining = MAX_MESSAGE_LENGTH - messageInput.value.length;
+                    charCounter.textContent = `${remaining} caracteres restantes`;
+                });
+
+                messageForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(messageForm);
+                    const submitButton = messageForm.querySelector('button[type="submit"]');
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Enviando...';
+
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                addMessageToDOM(result.newMessage);
+                                messageForm.reset();
+                                charCounter.textContent = `${MAX_MESSAGE_LENGTH} caracteres restantes`;
+                            } else {
+                                showFeedback(result.message, false);
+                            }
+                        })
+                        .catch(() => showFeedback('Erro de comunicação ao enviar recado.', false))
+                        .finally(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = 'Enviar Recado';
+                        });
+                });
+            }
+
+            // --- Funções Auxiliares ---
             function renderOrUpdateChart(category, categoryData) {
-                const sanitizedId = category.replace(/[^a-zA-Z0-9_]/g, '');
+                const sanitizedId = sanitizeCategory(category);
                 const ctx = document.getElementById(`chart-${sanitizedId}`)?.getContext('2d');
                 if (!ctx) return;
 
@@ -189,7 +273,7 @@ foreach (array_keys($categories) as $category) {
                             datasets: [{
                                 label: 'Votos',
                                 data: votes,
-                                backgroundColor: ['#0d6efd', '#6c757d', '#198754', '#dc3545', '#ffc107', '#0dcaf0'],
+                                backgroundColor: '#FF5A5F',
                                 borderRadius: 4,
                             }]
                         },
@@ -207,91 +291,41 @@ foreach (array_keys($categories) as $category) {
                 }
             }
 
-            function updateRankingList(category, categoryData) {
-                const sanitizedId = category.replace(/[^a-zA-Z0-9_]/g, '');
-                const listElement = document.querySelector(`#category-${sanitizedId} .ranking-list`);
-                if (!listElement) return;
-                listElement.innerHTML = '';
-
-                const sortedData = Object.entries(categoryData).sort(([, a], [, b]) => b - a);
-
-                if (sortedData.length === 0) {
-                    listElement.innerHTML = '<li class="list-group-item">Nenhum participante.</li>';
-                } else {
-                    sortedData.forEach(([person, votes]) => {
-                        const li = document.createElement('li');
-                        li.className = 'list-group-item';
-                        li.innerHTML = `<span>${person}</span> <span class="badge bg-primary rounded-pill">${votes}</span>`;
-                        listElement.appendChild(li);
-                    });
-                }
-            }
-
-            function updatePersonOptions() {
-                const selectedCategory = categorySelect.value;
-                personSelect.innerHTML = '';
-                if (!selectedCategory || !categoriesData[selectedCategory]) return;
-                
-                const people = Object.keys(categoriesData[selectedCategory]);
-                if (people.length > 0) {
-                    people.forEach(person => {
-                        const option = document.createElement('option');
-                        option.value = person;
-                        option.textContent = person;
-                        personSelect.appendChild(option);
-                    });
-                } else {
-                    personSelect.innerHTML = '<option disabled>Nenhuma pessoa</option>';
-                }
-            }
-            
             function showFeedback(message, isSuccess) {
+                const feedbackMessage = document.getElementById('feedback-message');
                 feedbackMessage.innerHTML = `<div class="alert alert-${isSuccess ? 'success' : 'danger'}">${message}</div>`;
                 feedbackMessage.style.display = 'block';
-                setTimeout(() => { feedbackMessage.style.display = 'none'; }, 4000);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => { feedbackMessage.style.display = 'none'; }, 5000);
             }
 
-            // --- Lógica Principal ---
-            for (const category in categoriesData) {
-                renderOrUpdateChart(category, categoriesData[category]);
-                updateRankingList(category, categoriesData[category]);
+            function addMessageToDOM(msg) {
+                const messagesList = document.getElementById('messages-list');
+                const noMessagesEl = document.getElementById('no-messages');
+                if (noMessagesEl) noMessagesEl.remove();
+
+                const messageEl = document.createElement('div');
+                messageEl.className = 'border-bottom pb-2 mb-2';
+                messageEl.innerHTML = `
+                    <p class="mb-1" style="word-wrap: break-word;"><i class="bi bi-chat-right-text me-2 text-muted"></i>${escapeHTML(msg.message)}</p>
+                    <small class="text-muted ms-4">
+                        <strong><i class="bi bi-person-fill"></i> ${escapeHTML(msg.name)}</strong> - <i class="bi bi-clock"></i> ${msg.date}
+                    </small>
+                `;
+                messagesList.prepend(messageEl);
             }
 
-            updatePersonOptions();
-            if (categorySelect.options.length === 0) {
-                voteForm.style.display = 'none';
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+                p.textContent = str;
+                return p.innerHTML;
             }
 
-            categorySelect.addEventListener('change', updatePersonOptions);
-
-            voteForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const formData = new FormData(voteForm);
-                fetch('api.php', { method: 'POST', body: formData })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        showFeedback(result.message, true);
-                        
-                        for (const category in result.categories) {
-                            renderOrUpdateChart(category, result.categories[category]);
-                            updateRankingList(category, result.categories[category]);
-                        }
-
-                        const votedCategory = formData.get('category');
-                        const optionToRemove = categorySelect.querySelector(`option[value="${votedCategory}"]`);
-                        if (optionToRemove) optionToRemove.remove();
-                        
-                        updatePersonOptions();
-                        if (categorySelect.options.length === 0) {
-                            voteForm.style.display = 'none';
-                            alreadyVotedMessage.style.display = 'block';
-                        }
-                    } else {
-                        showFeedback(result.message, false);
-                    }
-                })
-                .catch(() => showFeedback('Erro de comunicação.', false));
+            // Renderiza os gráficos para as categorias já votadas no carregamento da página
+            votedCategories.forEach(category => {
+                if (categoriesData[category]) {
+                    renderOrUpdateChart(category, categoriesData[category]);
+                }
             });
         });
     </script>

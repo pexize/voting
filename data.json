@@ -1,20 +1,177 @@
 {
     "password": "admin123",
-    "active_event_id": "default",
+    "active_event_id": "evt_large_sample_1724340000",
     "events": {
-        "default": {
-            "name": "Votação Principal",
+        "evt_large_sample_1724340000": {
+            "name": "Grande Votação Anual",
             "categories": {
-                "Mais Conspiranoico": {
-                    "Alice": 0,
-                    "Bob": 0
+                "Mais Inovador(a)": {
+                    "Pessoa A": 1,
+                    "Pessoa B": 0,
+                    "Pessoa C": 1,
+                    "Pessoa D": 1,
+                    "Pessoa E": 0
                 },
-                "Mais Dramático": {
-                    "Carol": 0,
-                    "Dave": 0
+                "Melhor Companheiro(a) de Equipe": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 1,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Mestre do Café": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 1,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Solucionador(a) de Problemas": {
+                    "Pessoa A": 1,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 1,
+                    "Pessoa E": 0
+                },
+                "O Mais Engraçado(a)": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 1,
+                    "Pessoa D": 0,
+                    "Pessoa E": 1
+                },
+                "Melhor Playlist": {
+                    "Pessoa A": 1,
+                    "Pessoa B": 0,
+                    "Pessoa C": 1,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Rei\/Rainha do Home Office": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 1,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "O Mais Organizado(a)": {
+                    "Pessoa A": 1,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Melhor Apresentador(a)": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 1,
+                    "Pessoa C": 1,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "O Mais prestativo": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 1,
+                    "Pessoa E": 0
+                },
+                "Mestre da Planilha": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 1,
+                    "Pessoa E": 0
+                },
+                "O Mais Criativo(a)": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Melhor Mentor(a)": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "O Mais Pontual": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Espírito Positivo": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 1,
+                    "Pessoa E": 0
+                },
+                "O Mais Detalhista": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Melhor Cabelo": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "O Mais Geek": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Rei\/Rainha dos Memes": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
+                },
+                "Melhor Caneca": {
+                    "Pessoa A": 0,
+                    "Pessoa B": 0,
+                    "Pessoa C": 0,
+                    "Pessoa D": 0,
+                    "Pessoa E": 0
                 }
             }
         }
     },
-    "messages": []
+    "messages": [
+        {
+            "id": "msg_1755893836_68a8d04caefdc",
+            "name": "Eu",
+            "message": "Prontiu",
+            "date": "22\/08\/2025 20:17"
+        },
+        {
+            "id": "msg_1755893721_68a8cfd9c88f0",
+            "name": "Fino",
+            "message": "Teste",
+            "date": "22\/08\/2025 20:15"
+        },
+        {
+            "id": "msg_1755893280_68a8ce2002da0",
+            "name": "ROBERTO",
+            "message": "werwer",
+            "date": "22\/08\/2025 20:08"
+        },
+        {
+            "id": "msg_1755887302_68a8b6c6886a0",
+            "name": "Pexis",
+            "message": "ewr",
+            "date": "22\/08\/2025 18:28"
+        }
+    ]
 }

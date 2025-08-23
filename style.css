@@ -1,40 +1,40 @@
 /* Importa a fonte do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-/* --- Variáveis do Design "Modern & Polished" --- */
+/* --- Paleta de Cores Inspirada no Clubhouse --- */
 :root {
-    --gradient-start: #0052D4;
-    --gradient-end: #4364F7;
-    --gradient-secondary: #6FB1FC;
-    --background-gradient: linear-gradient(45deg, var(--gradient-start), var(--gradient-end), var(--gradient-secondary));
-    --card-bg: rgba(255, 255, 255, 0.95); /* Mais opaco */
-    --text-color: #333;
-    --heading-color: #111827;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --shadow-color: rgba(0, 82, 212, 0.15); /* Sombra baseada no azul */
-    --shadow-card: 0 10px 25px var(--shadow-color);
-    --shadow-hover: 0 20px 35px var(--shadow-color);
-    --border-radius: 18px;
+    --background-color: #FFFBF5; /* Branco-creme/bege */
+    --card-bg: #FFFFFF;
+    --text-color: #3D3D3D; /* Cinza escuro */
+    --heading-color: #2C2C2C; /* Quase preto */
+    --accent-color: #FF5A5F; /* Vermelho-coral */
+    --accent-color-darker: #E04F54;
+    --border-color: #EAEAEA;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 8px 20px var(--shadow-color);
+    --shadow-hover: 0 12px 25px rgba(0, 0, 0, 0.08);
+    --border-radius: 20px;
 }
 
 /* --- Estilos Globais --- */
 body {
     font-family: 'Poppins', sans-serif;
-    background-image: var(--background-gradient);
+    background-color: var(--background-color);
     color: var(--text-color);
     background-attachment: fixed;
+    transition: background-color 0.3s ease;
 }
 
 /* --- Tipografia e Cabeçalho --- */
 .display-4 {
     font-weight: 800;
-    font-size: 3.5rem;
-    color: var(--heading-color); /* Cor sólida */
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05));
+    font-size: 3.2rem;
+    color: var(--heading-color);
+    transition: font-size 0.3s ease;
 }
 .lead {
     font-weight: 500;
-    color: #555;
+    color: #6B6B6B;
 }
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     color: var(--heading-color);
@@ -47,9 +47,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-card);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card:hover {
     transform: translateY(-8px);
@@ -65,11 +63,12 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .form-control, .form-select {
     border-radius: 12px;
     padding: 0.875rem 1.125rem;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #DCDCDC;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .form-control:focus, .form-select:focus {
-    border-color: var(--gradient-start);
-    box-shadow: 0 0 0 4px rgba(0, 82, 212, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(255, 90, 95, 0.15);
 }
 .btn {
     border-radius: 12px;
@@ -79,28 +78,31 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border: none;
 }
 .btn-primary {
-    background-image: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    background-color: var(--accent-color);
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3);
+    box-shadow: 0 4px 20px rgba(255, 90, 95, 0.25);
+    animation: pulse 2.5s infinite;
 }
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 82, 212, 0.4);
+    background-color: var(--accent-color-darker);
+    box-shadow: 0 7px 25px rgba(255, 90, 95, 0.35);
+    animation-play-state: paused;
 }
 
-/* --- Efeito "Glow" Sutil (agora um pulso de sombra) --- */
+/* --- Animação Pulsante para Botão --- */
 @keyframes pulse {
-    0% { box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3); }
-    50% { box-shadow: 0 4px 25px rgba(67, 100, 247, 0.4); }
-    100% { box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3); }
-}
-.btn-glow {
-    animation: pulse 2.5s infinite ease-in-out;
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
 }
 
 /* --- Listas e Mural --- */
+.messages-list .border-bottom {
+    transition: background-color 0.2s ease;
+}
 .messages-list .border-bottom:hover {
-    background-color: rgba(0,0,0,0.03);
+    background-color: #F9F9F9;
 }
 .ranking-list .list-group-item {
     display: flex;
@@ -109,15 +111,45 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border: none;
 }
 .ranking-list .badge {
-    background-image: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    background-color: var(--accent-color);
     font-size: 0.9em;
 }
 
-/* Animações de Entrada */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* --- Animações de Entrada e Visibilidade --- */
+.ranking-hidden {
+    display: none;
+}
+.ranking-visible {
+    animation: revealRanking 0.7s ease-out forwards;
+}
+@keyframes revealRanking {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 .animate-fade-in-up {
-    animation: fadeInUp 0.7s ease-out forwards;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem; /* Reduz o título em telas menores */
+    }
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .card-body {
+        padding: 1.2rem;
+    }
 }
